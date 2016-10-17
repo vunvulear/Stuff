@@ -9,6 +9,7 @@ namespace Legacy.Core
         {
             while (true)
             {
+                Console.WriteLine("Stock check done");
                 Thread.Sleep(TimeSpan.FromSeconds(2));
             }
         }

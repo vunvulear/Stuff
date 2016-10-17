@@ -1,4 +1,5 @@
 ﻿using Legacy.Core;
+using System;
 
 namespace Legacy.Runner
 {
@@ -6,8 +7,12 @@ namespace Legacy.Runner
     {
         static void Main()
         {
+            Console.WriteLine("Start legacy application");
+
             IStockCheck stockCheck = new StockCheck();
             stockCheck.Monitor(100);
+
+            Console.WriteLine("End legacy application");
         }
     }
 }

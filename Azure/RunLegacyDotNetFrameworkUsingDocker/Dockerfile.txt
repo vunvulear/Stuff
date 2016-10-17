@@ -1,0 +1,3 @@
+FROM microsoft/windowsservercore
+COPY Legacy.Runner/bin/debug/ /root/
+ENTRYPOINT /root/Legacy.Runner.exe
