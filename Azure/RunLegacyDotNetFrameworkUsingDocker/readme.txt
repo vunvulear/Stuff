@@ -1,5 +1,9 @@
 The main purpose of this sample is to show how we can run Legacy applications using Docker and Windows Server 2016
 
+Remarks:
+- Before running the below PS commands, you shal set the PS location to the root level of this projects (same location where .sln is).
+
+
 Build docker image:
 docker build -f Dockerfile.txt -t legacy .
 
