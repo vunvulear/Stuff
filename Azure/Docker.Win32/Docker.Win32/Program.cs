@@ -23,7 +23,7 @@ namespace Docker.Win32
 
             Console.WriteLine($"dwProcessorLevel: {pSI.dwProcessorLevel}");
 
-            Console.WriteLine("End Win 32 Sample");
+            Console.WriteLine("End Win32 Sample");
             #endregion
 
             Console.WriteLine();
