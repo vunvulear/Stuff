@@ -1,0 +1,2 @@
+FROM microsoft/aspnet
+ADD WebForms /inetpub/wwwroot
