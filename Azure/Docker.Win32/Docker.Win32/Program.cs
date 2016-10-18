@@ -76,10 +76,8 @@ namespace Docker.Win32
 
         public static void RegistarDlls(string filePath)
         {
-                //'/s' : Specifies regsvr32 to run silently and to not display any message boxes.
                 string fileinfo = "/s" + " " + "\"" + filePath + "\"";
                 Process reg = new Process();
-                //This file registers .dll files as command components in the registry.
                 reg.StartInfo.FileName = "regsvr32.exe";
                 reg.StartInfo.Arguments = fileinfo;
                 reg.StartInfo.UseShellExecute = false;
