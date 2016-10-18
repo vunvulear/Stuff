@@ -1,0 +1,3 @@
+FROM microsoft/windowsservercore
+COPY Docker.Win32/bin/Debug /root/
+ENTRYPOINT /root/Docker.Win32.exe
