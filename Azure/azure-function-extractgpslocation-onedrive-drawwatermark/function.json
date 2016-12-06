@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "type": "apiHubFileTrigger",
+      "name": "inputFile",
+      "path": "Imagini/Peliculă/{filename}",
+      "connection": "onedrive_ONEDRIVE",
+      "direction": "in"
+    },
+    {
+      "type": "apiHubFile",
+      "name": "outputFile",
+      "path": "Imagini/Peliculă/pictureswithgpswatermark/{rand-guid}.jpg",
+      "connection": "onedrive_ONEDRIVE",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}
