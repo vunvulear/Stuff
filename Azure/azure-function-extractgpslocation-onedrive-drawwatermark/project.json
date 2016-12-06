@@ -1,0 +1,10 @@
+{
+  "frameworks": {
+    "net46":{
+      "dependencies": {
+        "ExifLib": "1.7.0.0",
+        "System.Drawing.Primitives": "4.3.0"
+      }
+    }
+   }
+}
