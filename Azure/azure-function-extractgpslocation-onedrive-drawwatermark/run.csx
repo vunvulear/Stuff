@@ -1,4 +1,4 @@
-#r "Microsoft.Azure.WebJobs.Extensions.ApiHub" // Don't forget to blog about it
+#r "Microsoft.Azure.WebJobs.Extensions.ApiHub"
 
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,25 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-public static void Run(Stream inputFile, TraceWriter log, Stream outputFile)
+public static void Run(Stream inputFile, Stream outputFile, TraceWriter log)
 {
     log.Info("Image Process Starts");
 
+    string locationText = GetCoordinate(inputFile, log);
+    log.Info($"Text to be written: '{locationText}'");
+
+    // Reset position. After Exif operations the cursor location is not on position 0 anymore;
+    inputFile.Position = 0;
+
+    WriteWatermark(locationText, inputFile, outputFile, log);
+
+    log.Info("Image Process Ends");
+}
+
+private static string GetCoordinate(Stream image, TraceWriter log)
+{
     log.Info("Extract location information");
-    ExifReader exifReader = new ExifReader(inputFile);
+    ExifReader exifReader = new ExifReader(image);
     double[] latitudeComponents;
     exifReader.GetTagValue(ExifTags.GPSLatitude, out latitudeComponents);
     double[] longitudeComponents;
@@ -38,26 +51,25 @@ public static void Run(Stream inputFile, TraceWriter log, Stream outputFile)
 
         location = $"Latitude: '{latitude}' | Longitude: '{longitude}'";
     }
-    log.Info($"Text to be written: '{location}'");
 
-    // Reset position. After Exif operations the cursor location is not on position 0 anymore;
-    inputFile.Position = 0;
+    return location;
+}
 
+private static void WriteWatermark(string watermarkContent, Stream originalImage, Stream newImage, TraceWriter log)
+{
     log.Info("Write text to picture");
-    using (Image inputImage = Image.FromStream(inputFile, true))
+    using (Image inputImage = Image.FromStream(originalImage, true))
     {
         using (Graphics graphic = Graphics.FromImage(inputImage))
         {
             graphic.SmoothingMode = SmoothingMode.HighQuality;
             graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
             graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            graphic.DrawString(location, new Font("Tahoma", 100, FontStyle.Bold), Brushes.Red, 200, 200);
+            graphic.DrawString(watermarkContent, new Font("Tahoma", 100, FontStyle.Bold), Brushes.Red, 200, 200);
             graphic.Flush();
 
             log.Info("Write to the output stream");
-            inputImage.Save(outputFile, ImageFormat.Jpeg);
+            inputImage.Save(newImage, ImageFormat.Jpeg);
         }
     }
-
-    log.Info("Image Process Ends");
 }
