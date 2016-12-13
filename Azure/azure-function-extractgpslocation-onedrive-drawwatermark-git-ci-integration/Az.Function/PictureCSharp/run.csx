@@ -18,7 +18,7 @@ public static void Run(Stream inputFile, Stream outputFile, TraceWriter log)
     string locationText = GetCoordinate(inputFile, log);
     log.Info($"Text to be written: '{locationText}'");
 
-    // Reset position. After Exif operations the cursor location is not on position 0 anymore;
+    // Reset position. After Exif operations to extract GPS data the cursor location is not on position 0 anymore;
     inputFile.Position = 0;
 
     WriteWatermark(locationText, inputFile, outputFile, log);
